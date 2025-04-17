@@ -1,54 +1,19 @@
-# React + TypeScript + Vite
+# XION Testnet Bridge USDC From Noble
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![XION Testnet Bridge USDC From Noble](./public/screenshot.png)
 
-Currently, two official plugins are available:
+Welcome! This is a simple and user-friendly interface that allows you to bridge USDC tokens from Noble testnet (grand-1) to XION testnet (xion-testnet-2).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+To use this bridge, you'll need:
+- A Cosmos-compatible wallet extension (like Keplr)
+- Some USDC tokens on Noble testnet (link to request is on app)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## What is this?
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This bridge helps you transfer your USDC tokens between two testnet environments:
+- **Source**: Noble testnet (grand-1)
+- **Destination**: XION testnet (xion-testnet-2)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+This is particularly useful for developers and users who want to test applications on the XION testnet using USDC tokens.
