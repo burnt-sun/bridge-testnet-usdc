@@ -59,6 +59,7 @@ function App() {
       disconnect();
     } else {
       connect({ chainId: "grand-1" });
+      queryClient.invalidateQueries({ queryKey: ["usdcBalance"] });
     }
   };
 

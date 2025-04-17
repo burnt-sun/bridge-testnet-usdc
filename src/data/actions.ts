@@ -23,7 +23,7 @@ export function useUSDCBalance(address: string) {
     queryKey: ["usdcBalance", address],
     queryFn: () => getUSDCBalance(address),
     enabled: !!address,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     refetchOnMount: false,
     refetchOnReconnect: false,
     staleTime: Infinity,
