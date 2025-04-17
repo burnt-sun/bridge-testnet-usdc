@@ -1,6 +1,5 @@
 # XION Testnet Bridge USDC From Noble
-
-![XION Testnet Bridge USDC From Noble](./public/screenshot.png)
+<img src="./public/screenshot.png" width="362" height="390" />
 
 Welcome! This is a simple and user-friendly interface that allows you to bridge USDC tokens from Noble testnet (grand-1) to XION testnet (xion-testnet-2).
 
