@@ -13,7 +13,6 @@ import { BaseButton } from "./components/Button";
 import { SubHeader } from "./components/SubHeader";
 import { Title } from "./components/Title";
 import { ExternalIcon } from "./components/ExternalIcon";
-import SpinnerV2 from "./components/SpinnerV2";
 
 function App() {
   const { connect } = useConnect();
@@ -26,7 +25,19 @@ function App() {
     sendIbcTokensAsync,
     isLoading: isSending,
     isSuccess,
-  } = useSendIbcTokens();
+  } = useSendIbcTokens({
+    onError: (error) => {
+      setError(
+        error instanceof Error
+          ? error.message
+          : typeof error === "string"
+          ? error
+          : "An unknown error occurred"
+      );
+      setTimeout(() => setError(null), 10000);
+      console.error(error);
+    },
+  });
   const queryClient = useQueryClient();
   const { data: balanceData, isLoading } = useUSDCBalance(
     account?.bech32Address || ""
@@ -36,6 +47,7 @@ function App() {
   const [recipientAddress, setRecipientAddress] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string>("");
 
   useEffect(() => {
@@ -69,8 +81,9 @@ function App() {
 
   const handleBridgeUSDC = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setError(null);
     if (!account || !recipientAddress || !amount) {
+      setError("Please fill in all fields");
       return;
     }
 
@@ -164,17 +177,36 @@ function App() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="w-full p-2 border border-gray-800 rounded-lg"
-                  type="text"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputMode="decimal"
+                  style={{ appearance: "textfield" }}
                   placeholder="Amount"
+                  onWheel={(e) => e.currentTarget.blur()}
+                  onFocus={(e) =>
+                    e.target.addEventListener(
+                      "wheel",
+                      (e) => e.preventDefault(),
+                      { passive: false }
+                    )
+                  }
+                  onBlur={(e) =>
+                    e.target.removeEventListener("wheel", (e) =>
+                      e.preventDefault()
+                    )
+                  }
                 />
                 <p>USDC</p>
               </div>
               <BaseButton
                 type="submit"
-                className={"cursor-pointer disabled:opacity-50"}
+                className={
+                  "cursor-pointer disabled:opacity-50 disabled:bg-black disabled:border-white disabled:text-white disabled:border-1"
+                }
                 disabled={isSending}
               >
-                {isSending ? <SpinnerV2 /> : "Bridge USDC"}
+                {isSending ? "Sending..." : "Bridge USDC"}
               </BaseButton>
               {success && (
                 <div className="flex flex-col gap-2">
@@ -189,6 +221,11 @@ function App() {
                     View on MintScan
                   </a>
                 </div>
+              )}
+              {error && (
+                <p className="text-sm text-white bg-red-500 rounded-lg p-2">
+                  {error}
+                </p>
               )}
             </form>
           )}
